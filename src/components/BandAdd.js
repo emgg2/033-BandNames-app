@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { SocketContext } from '../context/SocketContext';
 
 export const BandAdd = ({ addBand }) => {
 
   const [ value, setValue ] = useState('');
-
+  const { socket } = useContext( SocketContext );
 
   const addNewBand = ( name ) => {
-    addBand(name);
+    socket.emit( 'add-new-band', { name });
     setValue('');
   }
 
@@ -16,9 +17,6 @@ export const BandAdd = ({ addBand }) => {
         addNewBand(value);
       }
   }
-
-
-
   
   return (
     <>
