@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-export const BandList = ({ data, vote }) => {
+export const BandList = ({ data, voteBand, deleteBand, changeBandName }) => {
     const [bands, setBands] = useState(data);
 
     useEffect(() => {
@@ -17,10 +17,8 @@ export const BandList = ({ data, vote }) => {
       }))
     }
     
-    const onLostFocus = ( id, nombre ) => {
-        console.log(id, nombre);
-
-        //TODO: disparar el evento del socket
+    const onLostFocus = ( id, newName ) => {
+        changeBandName( id, newName );
     }
 
     const rowsCreate = () => {
@@ -32,7 +30,7 @@ export const BandList = ({ data, vote }) => {
             <td>
                 <button 
                     className='btn btn-primary'
-                    onClick={ () => vote ( band.id )}                    
+                    onClick={ () => voteBand ( band.id )}                    
                 > +1 </button>
             </td>
             <td>
@@ -45,7 +43,10 @@ export const BandList = ({ data, vote }) => {
             </td>
             <td> <h3> { band.votes }</h3> </td>
             <td>
-                <button className='btn btn-danger'>
+                <button 
+                    className='btn btn-danger'
+                    onClick={ () => deleteBand ( band.id ) }
+                >
                     Delete
                 </button>
             </td>
